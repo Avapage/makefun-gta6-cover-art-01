@@ -3,20 +3,93 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<title>Vice Cover — Sunset Cover Maker</title>
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+  <section class="controls" aria-label="Cover controls">
+    <h1>VICE COVER</h1>
+    <p class="tagline">Turn your photos into a Vice City sunset poster. Three steps: load photos, pick a layout, export the PNG.</p>
+
+    <fieldset>
+      <legend>1 · Photos</legend>
+      <label class="file">Add your photos
+        <input id="photos" type="file" accept="image/*" multiple>
+      </label>
+      <div class="samples">
+        <span>Or try a demo photo:</span>
+        <button id="sample-boulevard" type="button">Boulevard</button>
+        <button id="sample-pier" type="button">Pier</button>
+      </div>
+      <div id="thumbs" class="thumbs" aria-label="Loaded photos"></div>
+      <p class="hint">Click a thumbnail, then click a panel on the cover to fill it.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>2 · Layout &amp; grade</legend>
+      <div class="row" role="group" aria-label="Layout">
+        <button id="layout-poster" type="button" class="seg on">Poster</button>
+        <button id="layout-duo" type="button" class="seg">Duo</button>
+        <button id="layout-hero" type="button" class="seg">Hero</button>
+      </div>
+      <div class="row" role="group" aria-label="Colour grade">
+        <button id="grade-sunset" type="button" class="seg on">Sunset</button>
+        <button id="grade-neon" type="button" class="seg">Neon</button>
+        <button id="grade-noir" type="button" class="seg">Noir</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3 · Lettering</legend>
+      <label>Caption
+        <input id="caption" type="text" maxlength="28" value="SUNSET HEIST">
+      </label>
+      <label>Sub-caption
+        <input id="subcaption" type="text" maxlength="40" value="VICE CITY NIGHTS">
+      </label>
+      <label>Lettering colour
+        <select id="ink">
+          <option value="white">White heat</option>
+          <option value="gold">Gold</option>
+          <option value="neon">Neon pink</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <fieldset id="panel-box">
+      <legend>Selected panel</legend>
+      <p id="panel-name" class="panel-name">Hero panel</p>
+      <label>Zoom <input id="zoom" type="range" min="1" max="2.5" step="0.01" value="1"></label>
+      <label>Pan left–right <input id="panx" type="range" min="-0.5" max="0.5" step="0.01" value="0"></label>
+      <label>Pan up–down <input id="pany" type="range" min="-0.5" max="0.5" step="0.01" value="0"></label>
+      <label>Demo art for this panel
+        <select id="demo-art">
+          <option value="sunset">Sunset over the bay</option>
+          <option value="palms">Palm silhouettes</option>
+          <option value="skyline">Neon skyline</option>
+          <option value="car">Night cruise</option>
+        </select>
+      </label>
+      <button id="use-demo" type="button">Use demo art in this panel</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>4 · Export</legend>
+      <div class="row" role="group" aria-label="Export size">
+        <button id="size-square" type="button" class="seg on">1080 × 1080</button>
+        <button id="size-portrait" type="button" class="seg">1080 × 1350</button>
+        <button id="size-wide" type="button" class="seg">1920 × 1080</button>
+      </div>
+      <button id="export" type="button" class="export">Export PNG</button>
+      <p id="status" role="status"></p>
+    </fieldset>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+  <section class="stage">
+    <canvas id="cover" width="1080" height="1080" aria-label="The cover preview"></canvas>
+    <p class="stage-hint">Click a panel on the cover to select it, then crop it with the sliders.</p>
+  </section>
 </main>
 <script type="module" src="./src/main.js"></script>
 </body>
